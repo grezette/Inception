@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+    db:
+        build: ./requirements/mariadb
+        restart: unless-stopped
+        env_file: .env
+        environment:
+            - MYSQL_DATABASE=wordpress
+        volumes:
+            - dbdata:/home/login/data
+        networks:
+            - app-network
+    wp:
+        depends_on:
+            - db
+        build: ./requirements/wordpress
+        restart: unless-stopped
+        env_file: .env
+        environment:
+            - WORDPRESS_DB_HOST=db:3306
+            - WORDPRESS_DB_USER=$MYSQL_USER
+            - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+            - WORDPRESS_DB_NAME=wordpress
+        volumes:
+            - wordpress:/home/login/data
+        networks:
+            - app-network
+    web:
+        depends_on:
+            - wp
+        build: ./requirements/nginx
+        restart: unless-stopped
+        ports:
+            - "443:443"
+        volumes:
+            - wordpress:/home/login/data
+        networks:
+            - app-network
+volumes:
+    dbdata:
+    wordpress:
+
+networks:
+    app-network:
+        driver: bridge
