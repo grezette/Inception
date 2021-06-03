@@ -28,7 +28,9 @@ services:
             - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
             - WORDPRESS_DB_NAME=wordpress
         volumes:
-            - wordpress:/home/login/data
+            - type: bind
+              source: ./requirements/tools/wordpress
+              target: /home/login/data
         networks:
             - app-network
     web:
@@ -39,12 +41,14 @@ services:
         ports:
             - "443:443"
         volumes:
-            - wordpress:/home/login/data
+            - type: bind
+              source: ./requirements/tools/wordpress
+              target: /home/login/data
         networks:
             - app-network
 volumes:
     dbdata:
-    wordpress:
+        #wordpress:
 
 networks:
     app-network:
