@@ -1,7 +1,6 @@
 FROM debian:buster
 
 RUN apt-get update && \
-	apt-get install -y php-mysql && \
-	apt-get install -y default-mysql-server
+	apt-get install -y mariadb-server mariadb-client
 
-CMD service mysql start && sleep infinity
+CMD service mysql start && mysql

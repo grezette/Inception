@@ -6,4 +6,5 @@ RUN apt-get update &&\
 
 COPY ./conf/wp-config.php /var/www/html/wordpress/
 
-CMD service php7.3-fpm start && sleep infinity
+CMD mkdir run/php && /usr/sbin/php-fpm7.3 --nodaemonize
+#CMD service php7.3-fpm start && service php7.3-fpm stop && /usr/sbin/php-fpm7.3 --nodaemonize

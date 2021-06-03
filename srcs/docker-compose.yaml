@@ -4,6 +4,8 @@ services:
     db:
         build: ./requirements/mariadb
         restart: unless-stopped
+        ports:
+            - "3306"
         env_file: .env
         environment:
             - MYSQL_DATABASE=wordpress
@@ -11,11 +13,14 @@ services:
             - dbdata:/home/login/data
         networks:
             - app-network
+        tty: true
     wp:
         depends_on:
             - db
         build: ./requirements/wordpress
         restart: unless-stopped
+        ports:
+            - "9000"
         env_file: .env
         environment:
             - WORDPRESS_DB_HOST=db:3306
