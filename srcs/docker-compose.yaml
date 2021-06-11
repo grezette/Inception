@@ -1,11 +1,11 @@
 version: '3.3'
 
 services:
-    db:
+    mysql:
         build: ./requirements/mariadb
         restart: unless-stopped
         ports:
-            - "3306"
+            - "3306:3306"
         env_file: .env
         environment:
             - MYSQL_DATABASE=wordpress
@@ -16,7 +16,7 @@ services:
         tty: true
     wp:
         depends_on:
-            - db
+            - mysql
         build: ./requirements/wordpress
         restart: unless-stopped
         ports:
@@ -30,7 +30,7 @@ services:
         volumes:
             - type: bind
               source: ./requirements/tools/wordpress
-              target: /home/login/data
+              target: /var/www/html
         networks:
             - app-network
     web:
@@ -43,7 +43,7 @@ services:
         volumes:
             - type: bind
               source: ./requirements/tools/wordpress
-              target: /home/login/data
+              target: /var/www/html
         networks:
             - app-network
 volumes:
@@ -52,4 +52,3 @@ volumes:
 
 networks:
     app-network:
-        driver: bridge
