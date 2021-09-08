@@ -1,2 +1,2 @@
-mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE wordpress;"
-mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "GRANT ALL ON wordpress.* TO '$MYSQL_USER' IDENTIFIED BY '$MYSQL_PASSWORD';"
+mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXIST $MYSQL_DATABASE;"
+mysql --user=root --password=$MYSQL_ROOT_PASSWORD -e "GRANT ALL ON $MYSQL_DATABASE.* TO '$MYSQL_USER' IDENTIFIED BY '$MYSQL_PASSWORD';"

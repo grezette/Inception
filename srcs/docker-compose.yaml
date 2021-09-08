@@ -5,12 +5,12 @@ services:
         build: ./requirements/mariadb
         restart: unless-stopped
         ports:
-            - "3306:3306"
-        env_file: .env
+            - "3306"
+        env_file: ".env"
         environment:
             - MYSQL_DATABASE=wordpress
         volumes:
-            - dbdata:/home/login/data
+            - dbdata:/var/lib/mysql
         networks:
             - app-network
         tty: true
@@ -21,16 +21,14 @@ services:
         restart: unless-stopped
         ports:
             - "9000"
-        env_file: .env
+        env_file: ".env"
         environment:
             - WORDPRESS_DB_HOST=db:3306
             - WORDPRESS_DB_USER=$MYSQL_USER
             - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
             - WORDPRESS_DB_NAME=wordpress
         volumes:
-            - type: bind
-              source: ./requirements/tools/wordpress
-              target: /var/www/html
+            - wordpress:/var/www/html
         networks:
             - app-network
     web:
@@ -41,14 +39,22 @@ services:
         ports:
             - "443:443"
         volumes:
-            - type: bind
-              source: ./requirements/tools/wordpress
-              target: /var/www/html
+            - wordpress:/var/www/html
         networks:
             - app-network
 volumes:
     dbdata:
-        #wordpress:
+        driver: local
+        driver_opts:
+            o: bind
+            type: volume
+            device: ./requirements/tools/dbdata
+    wordpress:
+        driver: local
+        driver_opts:
+            o: bind
+            type: volume
+            device: ./requirements/tools/wordpress
 
 networks:
     app-network:
