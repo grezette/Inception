@@ -2,13 +2,12 @@ FROM debian:buster
 
 RUN apt-get update && \
  	apt-get install -y nginx && \
-	apt-get install -y openssl
+	apt-get install -y openssl && \
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=FR/ST=Ile de France/L=Paris/O=42/OU=Inception/CN=grezette.42.fr"
 
 RUN chown www-data:www-data /usr/share/nginx/html/ -R
 
 COPY ./conf/default /etc/nginx/sites-available/
-COPY ./conf/ssl-cert-snakeoil.pem /etc/ssl/certs/
-COPY ./conf/ssl-cert-snakeoil.key /etc/ssl/private/
 
 CMD ["nginx", "-g", "daemon off;"]
 
