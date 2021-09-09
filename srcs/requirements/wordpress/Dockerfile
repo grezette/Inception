@@ -5,6 +5,7 @@ COPY ./tools/if_mv.sh /tmp
 
 RUN apt-get update && \
 	apt-get install -y php7.3-fpm curl && \
+	mkdir -p /var/www/wordpress && \
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
 	chmod +x wp-cli.phar && \
 	mv wp-cli.phar /usr/local/bin/wp && \
@@ -16,7 +17,7 @@ EXPOSE 9000
 
 #CMD service php7.3-fpm start && php7.3-fpm -F -R
 
-CMD mkdir run/php && sh /tmp/if_mv.sh && php -S 127.0.0.1:9000 -t /var/www/html
+CMD mkdir run/php && sh /tmp/if_mv.sh && php -S 127.0.0.1:9000 -t /var/www/wordpress
 
 #/usr/sbin/php-fpm7.3 --nodaemonize
 #CMD service php7.3-fpm start && service php7.3-fpm stop && /usr/sbin/php-fpm7.3 --nodaemonize

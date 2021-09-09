@@ -10,7 +10,7 @@ services:
         environment:
             - MYSQL_DATABASE=wordpress
         volumes:
-            - dbdata:/var/lib/mysql
+            - dbdata:/var/lib/
         networks:
             - app-network
         tty: true
@@ -28,7 +28,7 @@ services:
             - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
             - WORDPRESS_DB_NAME=wordpress
         volumes:
-            - wordpress:/var/www/html
+            - wordpress:/var/www/wordpress
         networks:
             - app-network
     web:
@@ -39,7 +39,7 @@ services:
         ports:
             - "443:443"
         volumes:
-            - wordpress:/var/www/html
+            - wordpress:/var/www/wordpress
         networks:
             - app-network
 volumes:
@@ -48,13 +48,13 @@ volumes:
         driver_opts:
             o: bind
             type: volume
-            device: ./requirements/tools/dbdata
+            device: /home/user42/data/dbdata
     wordpress:
         driver: local
         driver_opts:
             o: bind
             type: volume
-            device: ./requirements/tools/wordpress
+            device: /home/user42/data/wordpress
 
 networks:
     app-network:
