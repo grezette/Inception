@@ -9,4 +9,4 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 EXPOSE 3306
 
-CMD service mysql start && sh /tmp/init_db.sh && mysql 
+CMD service mysql start && sh /tmp/init_db.sh && mysqld -u root 
