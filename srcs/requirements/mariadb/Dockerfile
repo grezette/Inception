@@ -5,6 +5,7 @@ RUN apt-get update && \
 
 RUN chmod 775 /var/lib/mysql
 COPY ./tools/init_db.sh /tmp
+COPY ./tools/mqriqdb_user.sql /tmp
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 EXPOSE 3306
