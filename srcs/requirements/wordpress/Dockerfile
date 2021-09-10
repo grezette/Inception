@@ -1,5 +1,12 @@
 FROM debian:buster
 
+ARG WORDPRESS_DB_NAME
+ARG WORDPRESS_ADMIN
+ARG WORDPRESS_ADMIN_PASSWORD
+ARG WORDPRESS_DB_USER
+ARG WORDPRESS_DB_PASSWORD
+ARG WORDPRESS_DB_HOST
+
 RUN apt-get update && \
 	apt-get install -y php7.3-fpm php-mysql curl && \
 	mkdir -p /var/www/wordpress && \
