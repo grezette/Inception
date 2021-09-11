@@ -1,14 +1,14 @@
-#sleep 20
+sleep 15
 
-echo "CREATE DATABASE IF NOT EXIST $MYSQL_DATABASE;
-CREATE USER IF NOT EXIST $WP_ADMIN@'%' IDENTIFIED BY '$WP_ADMIN_PASSWORD';
-CREATE USER IF NOT EXIST $WP_USER@'%' IDENTIFIED BY '$WP_USER_PASSWORD';
+echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
+CREATE USER IF NOT EXISTS '$WP_ADMIN' IDENTIFIED BY '$WP_ADMIN_PASSWORD';
+CREATE USER IF NOT EXISTS '$WP_USER' IDENTIFIED BY '$WP_USER_PASSWORD';
 GRANT ALL ON *.* TO '$WP_ADMIN_USER' IDENTIFIED BY '$WP_ADMIN_PASSWORD';
 GRANT ALL ON $MYSQL_DATABASE.* TO '$WP_USER' IDENTIFIED BY '$WP_USER_PASSWORD';
 FLUSH PRIVILEGES;" > /tmp/mariadb_user.sql
 
-#mysql -u root --password=$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /tmp/mariadb_user.sql
-#mysql_install_db --user=mysql --datadir=/var/lib/mysql
+mysql -u root --password=$MYSQL_ROOT_PASSWORD < /tmp/mariadb_user.sql
+mysql_install_db --user=mysql --datadir=/var/lib/mysql
 cd '/usr'
 #/usr/bin/mysqld
 

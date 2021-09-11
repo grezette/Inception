@@ -12,7 +12,8 @@ ARG WP_USER_PASSWORD
 RUN apt-get update && \
 	apt-get install -y mariadb-server
 
-RUN chmod 775 /var/lib/mysql
+RUN chmod 775 /var/lib/mysql && \
+	chown -R mysql:mysql /var/lib/mysql
 
 COPY ./tools/init_db.sh /tmp
 #COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
