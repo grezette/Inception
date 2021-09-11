@@ -1,14 +1,14 @@
 FROM debian:buster
 
-ARG WORDPRESS_DB_NAME
-ARG WORDPRESS_ADMIN
-ARG WORDPRESS_ADMIN_PASSWORD
-ARG WORDPRESS_DB_USER
-ARG WORDPRESS_DB_PASSWORD
-ARG WORDPRESS_DB_HOST
+ARG WP_DATABASE
+ARG WP_ADMIN
+ARG WP_ADMIN_PASSWORD
+ARG WP_USER
+ARG WP_USER_PASSWORD
+ARG WP_DB_HOST
 
 RUN apt-get update && \
-	apt-get install -y php7.3-fpm php-mysql curl && \
+	apt-get install -y php7.3-fpm mariadb-client curl && \
 	mkdir -p /var/www/wordpress && \
 	cd /tmp && \
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar  && \
