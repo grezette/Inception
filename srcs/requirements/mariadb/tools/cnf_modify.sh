@@ -1,4 +1,4 @@
-#
+echo "#
 # These groups are read by MariaDB server.
 # Use it for options that only the server (but not clients) should see
 #
@@ -13,9 +13,9 @@
 #
 # * Basic Settings
 #
-user                    = mysql
-pid-file                = /run/mysqld/mysqld.pid
-socket                  = /run/mysqld/mysqld.sock
+user                    = root
+pid-file                = var/run/mysqld/mysqld.pid
+socket                  = var/run/mysqld/mysqld.sock
 port                   = 3306
 basedir                 = /usr
 datadir                 = /var/lib/mysql
@@ -25,7 +25,7 @@ lc-messages-dir         = /usr/share/mysql
 
 # Instead of skip-networking the default is now to listen only on
 # localhost which is more compatible and is not less secure.
-bind-address            = 127.0.0.1
+bind-address            = 0.0.0.0
 
 #
 # * Fine Tuning
@@ -131,5 +131,4 @@ collation-server      = utf8mb4_general_ci
 # If you use the same .cnf file for MariaDB of different versions,
 # use this group for options that older servers don't understand
 [mariadb-10.3]
-
-
+" > /etc/mysql/mariadb.conf.d/50-server.cnf
