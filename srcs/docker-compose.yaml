@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-    mysql:
+    mariadb:
         env_file:
                 - .env
         build:
@@ -16,6 +16,7 @@ services:
                         - WP_USER=${WP_USER}
                         - WP_USER_PASSWORD=${WP_USER_PASSWORD}
         restart: unless-stopped
+        container_name: mariadb
         ports:
             - "3306"
         volumes:
@@ -23,32 +24,35 @@ services:
         networks:
             - app-network
         tty: true
-    wp:
+    wordpress:
         depends_on:
-            - mysql
+            - mariadb
         env_file: .env
         build:
               context: ./requirements/wordpress
               args: 
-                - DOMAIN_NAME:$DOMAIN_NAME
+                - DOMAIN_NAME=$DOMAIN_NAME
+                - MYSQL_DATABASE=$MYSQL_DATABASE
                 - WP_DATABASE:${WP_DATABASE}
-                - WP_ADMIN:${WP_ADMIN}
-                - WP_ADMIN_PASSWORD:${WP_ADMIN_PASSWORD}
-                - WP_USER:${WP_USER}
-                - WP_USER_PASSWORD:${WP_USER_PASSWORD}
-                - WP_DB_HOST:${WP_DB_HOST}
+                - WP_ADMIN=${WP_ADMIN}
+                - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+                - WP_USER=${WP_USER}
+                - WP_USER_PASSWORD=${WP_USER_PASSWORD}
+                - WP_DB_HOST=${WP_DB_HOST}
         restart: unless-stopped
+        container_name: wordpress
         ports:
             - "9000"
         volumes:
             - wordpress:/var/www/wordpress
         networks:
             - app-network
-    web:
+    nginx:
         depends_on:
-            - wp
+            - wordpress
         build: ./requirements/nginx
         restart: unless-stopped
+        container_name: nginx
         ports:
             - "443:443"
         volumes:
@@ -71,3 +75,4 @@ volumes:
 
 networks:
     app-network:
+

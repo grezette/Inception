@@ -4,7 +4,7 @@ ARG MYSQL_DATABASE
 ARG MYSQL_ROOT_PASSWORD
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
-ARG WORDPRESS_ADMIN
+ARG WP_ADMIN
 ARG WP_ADMIN_PASSWORD
 ARG WP_USER
 ARG WP_USER_PASSWORD
@@ -17,7 +17,7 @@ RUN chmod 775 /var/lib/mysql && \
 
 COPY ./tools/init_db.sh /tmp
 #COPY ./tools/cnf_modify.sh /tmp
-#COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 #COPY ./conf/my.cnf /etc/mysql/
 
 #RUN chmod 775 /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -32,3 +32,4 @@ RUN service mysql start && \
 EXPOSE 3306
 
 CMD ["mysqld"];
+

@@ -2,6 +2,7 @@ FROM debian:buster
 
 ARG DOMAIN_NAME
 ARG WP_DATABASE
+ARG MYSQL_DATABASE
 ARG WP_ADMIN
 ARG WP_ADMIN_PASSWORD
 ARG WP_USER
@@ -19,7 +20,7 @@ RUN apt-get update && \
 
 COPY ./conf/wp-config.php /var/www/wordpress
 COPY ./conf/init_wordpress.sh /tmp
-#COPY ./conf/www.conf /etc/php/7.3/fpm/pool
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
 RUN adduser --disabled-password -gecos 'wp' wp && \
 	adduser --disabled-password -gecos 'nginx' nginx && \
@@ -44,3 +45,4 @@ CMD php -S 127.0.0.1:9000 -t /var/www/wordpress
 
 #/usr/sbin/php-fpm7.3 --nodaemonize
 #CMD service php7.3-fpm start && service php7.3-fpm stop && /usr/sbin/php-fpm7.3 --nodaemonize
+
