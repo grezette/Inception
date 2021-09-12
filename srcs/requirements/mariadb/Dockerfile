@@ -17,7 +17,6 @@ RUN chmod 775 /var/lib/mysql && \
 
 COPY ./tools/init_db.sh /tmp
 #COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-COPY ./conf/my.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 RUN service mysql start && \
 	sh /tmp/init_db.sh
