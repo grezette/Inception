@@ -8,6 +8,7 @@ services:
                 context: ./requirements/mariadb
                 args:
                         - MYSQL_DATABASE=$MYSQL_DATABASE
+                        - MYSQL_ATABASE=$MYSQL_DAABASE
                         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
                         - MYSQL_USER=${MYSQL_USER}
                         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -32,6 +33,7 @@ services:
               context: ./requirements/wordpress
               args: 
                 - DOMAIN_NAME=$DOMAIN_NAME
+                - DOMAIN_NAE=$OMAIN_NAME
                 - MYSQL_DATABASE=$MYSQL_DATABASE
                 - WP_DATABASE:${WP_DATABASE}
                 - WP_ADMIN=${WP_ADMIN}
@@ -42,7 +44,7 @@ services:
         restart: unless-stopped
         container_name: wordpress
         ports:
-            - "9000"
+                - "9000:9000"
         volumes:
             - wordpress:/var/www/wordpress
         networks:
