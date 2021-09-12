@@ -19,7 +19,7 @@ services:
         ports:
             - "3306"
         volumes:
-            - dbdata:/var/lib/
+            - dbdata:/var/lib
         networks:
             - app-network
         tty: true
@@ -29,15 +29,15 @@ services:
         env_file: .env
         build:
               context: ./requirements/wordpress
+              args: 
+                - DOMAIN_NAME:$DOMAIN_NAME
+                - WP_DATABASE:${WP_DATABASE}
+                - WP_ADMIN:${WP_ADMIN}
+                - WP_ADMIN_PASSWORD:${WP_ADMIN_PASSWORD}
+                - WP_USER:${WP_USER}
+                - WP_USER_PASSWORD:${WP_USER_PASSWORD}
+                - WP_DB_HOST:${WP_DB_HOST}
         restart: unless-stopped
-        #environment:
-        #        - DOMAIN_NAME:$DOMAIN_NAME
-        #        - WP_DATABASE:"${WP_DATABASE}"
-        #        - WP_ADMIN:"${WP_ADMIN}"
-        #        - WP_ADMIN_PASSWORD:"${WP_ADMIN_PASSWORD}"
-        #        - WP_USER:"${WP_USER}"
-        #        - WP_USER_PASSWORD:"${WP_USER_PASSWORD}"
-        #        - WP_DB_HOST:"${WP_DB_HOST}"
         ports:
             - "9000"
         volumes:
