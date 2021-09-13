@@ -29,9 +29,8 @@ RUN adduser --disabled-password -gecos 'wp' wp && \
 	chmod -R 777 var/www/ && \
 	su - wp -c 'wp core download --path=/var/www/wordpress'
 
-RUN sh /tmp/init_wordpress.sh
-
 RUN service php7.3-fpm start
+
 
 #RUN mkdir -p /var/run/php
 
@@ -39,7 +38,7 @@ EXPOSE 9000
 
 #CMD service php7.3-fpm start && php7.3-fpm -F -R
 
-CMD php -S 127.0.0.1:9000 -t /var/www/wordpress
+CMD sh /tmp/init_wordpress.sh && php-fpm7.3 -F -R
 
 #CMD sh /tmp/init_wordpress.sh && php -S 127.0.0.1:9000 -t /var/www/wordpress
 

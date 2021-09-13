@@ -1,4 +1,4 @@
-if (!(find ../../ -type d -name "data") || !(find ../../data/ -type d -name "dbdata" ) || !(find ../../data/ -type d -name "wordpress"))
-	then mkdir -p ../../data/dbdata mkdir ../../data/wordpress
+if (!(find $HOME/ -type d -name "data") || !(find $HOME/data/ -type d -name "dbdata" ) || !(find $HOME/data/ -type d -name "wordpress"))
+	then mkdir -p $HOME/data/dbdata  $HOME/data/wordpress
 fi
 
