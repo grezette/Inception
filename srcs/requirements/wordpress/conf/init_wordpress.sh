@@ -9,7 +9,7 @@ sed -i "s/TO_REPLACE_DB_NAME/$MYSQL_DATABASE/g" /var/www/wordpress/wp-config.php
 
 su - wp -c 'wp core is-installed --path=/var/www/wordpress'
 
-if [ "$?" != 0 ]; then
+if [ "$?" == 1 ]; then
 	su - wp -c 'wp core install --url=$DOMAIN_NAME --title=efukt --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=info@example.com --skip-email --path=/var/www/wordpress/'
 su - wp -c 'wp user create test3 test3@example.com --role=contributor --path=/var/www/wordpress'
 fi
