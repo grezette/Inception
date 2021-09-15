@@ -15,6 +15,7 @@ RUN apt-get update && \
 RUN chmod 775 /var/lib/mysql && \
 	chown -R mysql:mysql /var/lib/mysql
 
+COPY ./conf/wp-db.sql /tmp
 COPY ./tools/init_db.sh /tmp
 #COPY ./tools/cnf_modify.sh /tmp
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
@@ -26,10 +27,8 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 RUN chown -R mysql:mysql /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN service mysql start && \
-	sh /tmp/init_db.sh
-
 EXPOSE 3306
 
+ENTRYPOINT [ "sh", "/tmp/init_db.sh" ]
 CMD ["mysqld"];
 

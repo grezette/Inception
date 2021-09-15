@@ -2,11 +2,14 @@ MYSQL_VOLUME	=	/home/$(USER)/data/dbdata
 WP_VOLUME	=	/home/$(USER)/data/wordpress
 
 all: hosts create_volumes
-	docker-compose -f ./srcs/docker-compose.yaml --env-file srcs/.env up -d --build 
+	cd /home/$(USER)/Documents/Inception/srcs && sudo docker-compose up -d --build 
 
 down:
-	 docker-compose -f ./srcs/docker-compose.yaml --env-file srcs/.env down -v --rmi 'all'
-	 rm -rf $(MYSQL_VOLUME) $(WP_VOLUME)
+	 cd /home/$(USER)/Documents/Inception/srcs && sudo docker-compose down
+fclean:
+	 cd /home/$(USER)/Documents/Inception/srcs && sudo docker-compose down -v --rmi 'all'
+	 sudo rm -rf $(MYSQL_VOLUME) $(WP_VOLUME)
+
 
 create_volumes:
 	[ -d $(MYSQL_VOLUME) ] || mkdir -p $(MYSQL_VOLUME)

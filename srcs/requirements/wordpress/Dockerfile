@@ -18,7 +18,7 @@ RUN apt-get update && \
 	cd / && \
 	mv /tmp/wp-cli.phar /usr/local/bin/wp
 
-COPY ./conf/wp-config.php /var/www/wordpress
+COPY ./conf/wp-config.php /tmp
 COPY ./conf/init_wordpress.sh /tmp
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
@@ -38,10 +38,11 @@ EXPOSE 9000
 
 #CMD service php7.3-fpm start && php7.3-fpm -F -R
 
-CMD sh /tmp/init_wordpress.sh && php-fpm7.3 -F -R
+ENTRYPOINT [ "sh", "/tmp/init_wordpress.sh" ]
+CMD [ "php-fpm7.3", "-F", "-R" ]
 
 #CMD sh /tmp/init_wordpress.sh && php -S 127.0.0.1:9000 -t /var/www/wordpress
 
 #/usr/sbin/php-fpm7.3 --nodaemonize
-#CMD service php7.3-fpm start && service php7.3-fpm stop && /usr/sbin/php-fpm7.3 --nodaemonize
+#CMD service php7.3-fpm start && service php6.3-fpm stop && /usr/sbin/php-fpm7.3 --nodaemonize
 
