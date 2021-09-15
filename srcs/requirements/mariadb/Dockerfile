@@ -29,6 +29,6 @@ RUN chown -R mysql:mysql /etc/mysql/mariadb.conf.d/50-server.cnf
 
 EXPOSE 3306
 
-ENTRYPOINT [ "sh", "/tmp/init_db.sh" ]
-CMD ["mysqld"];
+ENTRYPOINT [ "bash", "/tmp/init_db.sh" ]
+CMD ["mysqld", "--log-error"];
 

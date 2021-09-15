@@ -24,6 +24,7 @@ services:
         networks:
             - app-network
         tty: true
+        stdin_open: true
     wordpress:
         depends_on:
             - mariadb
